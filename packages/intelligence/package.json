@@ -1,0 +1,21 @@
+{
+  "name": "@reflection-ai/intelligence",
+  "version": "1.0.0",
+  "description": "Semantic intelligence and satisfaction scoring for ReflectionAi",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w"
+  },
+  "dependencies": {
+    "@reflection-ai/shared": "*",
+    "@reflection-ai/ai": "*",
+    "@reflection-ai/database": "*"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}

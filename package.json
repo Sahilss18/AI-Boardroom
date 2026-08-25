@@ -1,0 +1,23 @@
+{
+  "name": "reflection-ai",
+  "version": "1.0.0",
+  "description": "Interactive multimodal AI simulation and practice platform",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present",
+    "db:migrate": "npm run migrate -w @reflection-ai/database",
+    "db:seed": "npm run seed -w @reflection-ai/database",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "test": "node --import tsx tests/decision-engine.test.ts"
+  },
+  "devDependencies": {
+    "tsx": "^4.7.1",
+    "typescript": "^5.3.3"
+  }
+}

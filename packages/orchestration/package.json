@@ -1,0 +1,24 @@
+{
+  "name": "@reflection-ai/orchestration",
+  "version": "1.0.0",
+  "description": "Simulation state graph and decision logic for ReflectionAi",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w"
+  },
+  "dependencies": {
+    "@reflection-ai/shared": "*",
+    "@reflection-ai/database": "*",
+    "@reflection-ai/ai": "*",
+    "@reflection-ai/agents": "*",
+    "@reflection-ai/intelligence": "*",
+    "@reflection-ai/rag": "*"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}

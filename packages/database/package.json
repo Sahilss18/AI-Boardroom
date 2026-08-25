@@ -1,0 +1,24 @@
+{
+  "name": "@reflection-ai/database",
+  "version": "1.0.0",
+  "description": "MySQL persistence layers and schema scripts for ReflectionAi",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "migrate": "node --import tsx src/migrate.ts",
+    "seed": "node --import tsx src/seed.ts"
+  },
+  "dependencies": {
+    "@reflection-ai/shared": "*",
+    "dotenv": "^16.4.5",
+    "mysql2": "^3.9.2"
+  },
+  "devDependencies": {
+    "tsx": "^4.7.1",
+    "typescript": "^5.3.3"
+  }
+}

@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: reflection_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: reflection_ai
+      MYSQL_USER: reflection_user
+      MYSQL_PASSWORD: reflection_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: unless-stopped
+    command: --default-authentication-plugin=mysql_native_password
+
+  redis:
+    image: redis:7-alpine
+    container_name: reflection_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: reflection_qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    restart: unless-stopped
+
+  # Optional Postgres helper ONLY for Langfuse observability dashboard
+  langfuse-db:
+    image: postgres:16-alpine
+    container_name: langfuse_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+      POSTGRES_DB: langfuse
+    volumes:
+      - langfuse_db_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  langfuse:
+    image: langfuse/langfuse:2
+    container_name: reflection_langfuse
+    depends_on:
+      - langfuse-db
+    ports:
+      - "3001:3000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgrespassword@langfuse-db:5432/langfuse
+      - NEXTAUTH_SECRET=mysecretchangeitposthaste
+      - NEXTAUTH_URL=http://localhost:3001
+      - SALT=saltpepperandgarlic
+      - LANGFUSE_INIT_PROJECT_NAME=ReflectionAi
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+  redis_data:
+  qdrant_data:
+  langfuse_db_data:

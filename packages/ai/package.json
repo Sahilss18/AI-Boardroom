@@ -1,0 +1,19 @@
+{
+  "name": "@reflection-ai/ai",
+  "version": "1.0.0",
+  "description": "AI provider integrations (Gemini + Groq/Grok) for ReflectionAi",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}

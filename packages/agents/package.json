@@ -1,0 +1,20 @@
+{
+  "name": "@reflection-ai/agents",
+  "version": "1.0.0",
+  "description": "Agent cognitive states and evaluation routines for ReflectionAi",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w"
+  },
+  "dependencies": {
+    "@reflection-ai/shared": "*",
+    "@reflection-ai/ai": "*"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
