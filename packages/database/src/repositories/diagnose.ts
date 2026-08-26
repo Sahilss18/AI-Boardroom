@@ -1,4 +1,4 @@
-import { pool } from 'c:/Users/sahil/OneDrive/Desktop/ReflexAi/packages/database/src/connection.js';
+import { pool } from '../connection.js';
 
 async function diagnose() {
   const [sessions] = await pool.query('SELECT id, current_turn FROM sessions ORDER BY id DESC LIMIT 1') as any[];

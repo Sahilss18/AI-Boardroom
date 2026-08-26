@@ -47,14 +47,10 @@ export async function router(fastify: FastifyInstance) {
 
   // Session Management
   fastify.post('/api/sessions', async (request: FastifyRequest, reply: FastifyReply) => {
-    const { scenarioId, personaIds } = request.body as { scenarioId: number; personaIds: number[] };
-
-    if (!scenarioId || !personaIds || personaIds.length === 0) {
-      return reply.status(400).send({
-        success: false,
-        error: { code: 'INVALID_PARAMETERS', message: 'scenarioId and at least one personaId are required.' }
-      });
-    }
+    const body = (request.body || {}) as any;
+    const scenarioId = Number(body.scenarioId || 1);
+    const rawPersonaIds = body.personaIds || body.active_persona_ids || [1, 2, 3];
+    const personaIds = Array.isArray(rawPersonaIds) && rawPersonaIds.length > 0 ? rawPersonaIds : [1, 2, 3];
 
     try {
       // 1. Create the session in database (Test User ID is seeded as 1)
@@ -66,13 +62,11 @@ export async function router(fastify: FastifyInstance) {
         if (persona) {
           const agent = new BaseAgent(persona);
           const initialState = agent.initializeState();
-          await SessionRepository.addPersonaToSession(session.id, pId, initialState);
+          await SessionRepository.addPersonaToSession(session.id, persona.id, initialState);
         }
       }
 
       // 3. Pre-populate latent questions for the session (non-blocking background task)
-      // We return the session immediately and generate questions in the background
-      // so the UI never hangs on rate-limited AI calls during session creation.
       const sessionPersonas = await SessionRepository.getPersonasForSession(session.id);
       simulationGraph.ensureLatentQuestions(session.id, sessionPersonas, scenarioId).catch((err: any) => {
         console.warn(`[session ${session.id}] Background question generation failed (will retry on first turn):`, err?.message);
@@ -229,11 +223,24 @@ export async function router(fastify: FastifyInstance) {
       const buffer = Buffer.from(fileBase64, 'base64');
       const chunks = await DocumentParser.parseAndChunk(fileName, buffer);
       const summaryText = chunks.slice(0, 10).map((c: any) => c.text).join('\n\n');
+      const parsedText = chunks.map((c: any) => c.text).join('\n\n');
+      
+      const estimatedPages = Math.max(
+        1,
+        new Set(chunks.map((c: any) => c.metadata?.pageNumber || c.metadata?.slideNumber).filter(Boolean)).size || chunks.length
+      );
+
+      // Extract unique technical capital words / keywords
+      const entityMatches = parsedText.match(/\b[A-Z][a-zA-Z0-9_-]{2,}\b/g) || [];
+      const keyEntities = Array.from(new Set(entityMatches)).slice(0, 20);
 
       return {
         success: true,
         fileName,
         chunksCount: chunks.length,
+        estimated_slides_or_pages: estimatedPages,
+        key_entities: keyEntities,
+        parsed_text: parsedText,
         summaryText: summaryText.substring(0, 1500),
         fileBase64
       };

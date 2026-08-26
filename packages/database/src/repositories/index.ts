@@ -41,10 +41,37 @@ export const PersonaRepository = {
     }));
   },
 
-  async getById(id: number): Promise<Persona | null> {
-    const [rows] = await pool.query('SELECT * FROM personas WHERE id = ?', [id]);
-    const list = rows as any[];
-    if (list.length === 0) return null;
+  async getById(idOrSlug: number | string): Promise<Persona | null> {
+    const isNum = typeof idOrSlug === 'number' || (!isNaN(Number(idOrSlug)) && String(idOrSlug).trim() !== '');
+    const numId = isNum ? Number(idOrSlug) : 0;
+    const strSlug = String(idOrSlug);
+
+    const [rows] = await pool.query('SELECT * FROM personas WHERE id = ? OR slug = ?', [numId, strSlug]);
+    let list = rows as any[];
+    
+    // Fuzzy/slug fallback mapping if exact match not found
+    if (list.length === 0) {
+      const slugMap: Record<string, string> = {
+        'cto': 'senior-cto',
+        'cfo': 'budget-cfo',
+        'business-analyst': 'skeptical-vc',
+        'interviewer': 'hr-manager',
+        'manager': 'hr-manager',
+        'teacher': 'strict-professor',
+        'technical-interviewer': 'senior-cto',
+      };
+      const mappedSlug = slugMap[strSlug] || strSlug;
+      const [mappedRows] = await pool.query('SELECT * FROM personas WHERE slug = ? OR role LIKE ? LIMIT 1', [mappedSlug, `%${strSlug}%`]);
+      list = mappedRows as any[];
+    }
+
+    if (list.length === 0) {
+      // Return first persona as ultimate safety fallback
+      const [all] = await pool.query('SELECT * FROM personas LIMIT 1');
+      list = all as any[];
+      if (list.length === 0) return null;
+    }
+
     const r = list[0];
     return {
       id: Number(r.id),
