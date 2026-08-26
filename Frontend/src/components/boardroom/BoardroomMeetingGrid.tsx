@@ -126,16 +126,16 @@ const AgentMeetingTile: React.FC<AgentMeetingTileProps> = ({
         </div>
       </div>
 
-      {/* 3. Bottom Section: Agent Name Tag in Footer + Circular Arrow Action (Fixed Footer) */}
-      <div className="relative z-10 w-full shrink-0 mt-1 pt-2 border-t border-white/[0.08] flex items-center justify-between">
-        <div className="flex items-center gap-2 min-w-0 pr-1 flex-1">
+      {/* 3. Bottom Section: Agent Name Tag in Footer (Double Lines Allowed, Complete Full Visibility) */}
+      <div className="relative z-10 w-full shrink-0 mt-1 pt-1.5 sm:pt-2 border-t border-white/[0.08] flex items-center justify-between min-h-[34px] sm:min-h-[38px]">
+        <div className="flex items-center gap-1.5 sm:gap-2 min-w-0 pr-1 flex-1">
           <span
             className={`w-2 h-2 rounded-full shrink-0 ${isActiveSpeaker ? 'animate-ping' : ''}`}
             style={{ backgroundColor: agent.hex, boxShadow: `0 0 8px ${agent.hex}` }}
           />
           <span
             style={{ fontFamily: "'Michroma', sans-serif" }}
-            className="text-[9px] sm:text-[10px] md:text-[10.5px] font-bold text-white uppercase tracking-wider truncate"
+            className="text-[7.5px] sm:text-[8px] md:text-[8.5px] font-bold text-white uppercase tracking-tight leading-snug whitespace-normal break-words"
           >
             {agent.name}
           </span>
@@ -143,13 +143,13 @@ const AgentMeetingTile: React.FC<AgentMeetingTileProps> = ({
 
         {/* Small Circular Arrow Glass Button */}
         <div
-          className={`w-5.5 h-5.5 sm:w-6 sm:h-6 rounded-full border border-white/[0.12] bg-white/[0.03] flex items-center justify-center transition-all duration-300 shrink-0 ${
+          className={`w-5 h-5 sm:w-5.5 sm:h-5.5 rounded-full border border-white/[0.12] bg-white/[0.03] flex items-center justify-center transition-all duration-300 shrink-0 ${
             isActiveSpeaker
               ? 'bg-neon-cyan/20 border-cyan-400 text-cyan-300 shadow-[0_0_8px_#00f0ff]'
               : 'text-slate-400 group-hover:text-white'
           }`}
         >
-          <ArrowUpRight className="w-3 h-3" />
+          <ArrowUpRight className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
         </div>
       </div>
     </div>

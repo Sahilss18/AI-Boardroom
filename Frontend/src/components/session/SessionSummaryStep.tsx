@@ -29,17 +29,17 @@ export const SessionSummaryStep: React.FC<SessionSummaryStepProps> = ({
   const selectedAgents = AI_AGENTS.filter((a) => selectedPersonaIds.includes(a.id));
 
   return (
-    <div className="flex flex-col gap-5 sm:gap-6 w-full select-none">
+    <div className="flex flex-col gap-5 w-full select-none">
       <div className="text-center">
         <h3
           style={{ fontFamily: "'Michroma', sans-serif" }}
-          className="text-2xl sm:text-3xl font-bold text-white uppercase tracking-tight"
+          className="text-lg sm:text-xl font-bold text-white tracking-wider uppercase"
         >
           Session Summary.
         </h3>
         <p
           style={{ fontFamily: "'Exo 2', sans-serif" }}
-          className="text-xs sm:text-sm text-slate-300 font-normal mt-1"
+          className="text-xs sm:text-[13px] text-slate-300 font-normal mt-1 max-w-xl mx-auto"
         >
           Review your boardroom parameters before establishing full-duplex session connection.
         </p>

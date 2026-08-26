@@ -75,18 +75,18 @@ export const DocumentUploadStep: React.FC<DocumentUploadStepProps> = ({ file, on
   };
 
   return (
-    <div className="flex flex-col gap-7 w-full select-none">
+    <div className="flex flex-col gap-5 w-full select-none">
       {/* Main Heading & Subtitle */}
       <div className="text-center">
         <h3
           style={{ fontFamily: "'Michroma', sans-serif" }}
-          className="text-2xl sm:text-3xl md:text-[32px] font-bold text-white tracking-[0.04em] uppercase drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]"
+          className="text-lg sm:text-xl font-bold text-white tracking-wider uppercase"
         >
           Bring your material.
         </h3>
         <p
           style={{ fontFamily: "'Exo 2', sans-serif" }}
-          className="text-sm sm:text-[15px] text-slate-300 font-normal leading-relaxed max-w-xl mx-auto mt-2.5"
+          className="text-xs sm:text-[13px] text-slate-300 font-normal leading-relaxed max-w-xl mx-auto mt-1"
         >
           Give the boardroom something concrete to challenge and ground questions upon.
         </p>

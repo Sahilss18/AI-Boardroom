@@ -22,13 +22,13 @@ export const PersonaSelectStep: React.FC<PersonaSelectStepProps> = ({
       <div className="text-center">
         <h3
           style={{ fontFamily: "'Michroma', sans-serif" }}
-          className="text-xl sm:text-2xl font-bold text-white uppercase tracking-tight"
+          className="text-lg sm:text-xl font-bold text-white tracking-wider uppercase"
         >
-          BUILD YOUR BOARD.
+          Build your board.
         </h3>
         <p
           style={{ fontFamily: "'Exo 2', sans-serif" }}
-          className="text-xs sm:text-sm text-slate-300 font-normal mt-1"
+          className="text-xs sm:text-[13px] text-slate-300 font-normal mt-1 max-w-xl mx-auto"
         >
           Select <span className="text-neon-cyan font-bold font-mono">{maxCount}</span> specialized personas to sit across the table.
         </p>

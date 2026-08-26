@@ -19,16 +19,19 @@ export const AgentCountStep: React.FC<AgentCountStepProps> = ({ agentCount, onCo
   };
 
   return (
-    <div className="flex flex-col gap-6 w-full text-center">
+    <div className="flex flex-col gap-5 w-full text-center">
       <div>
-        <h3 className="text-2xl sm:text-3xl font-display font-extrabold text-white">
-          How many voices should challenge you?
+        <h3
+          style={{ fontFamily: "'Michroma', sans-serif" }}
+          className="text-lg sm:text-xl font-bold text-white tracking-wider uppercase"
+        >
+          Boardroom Panel Size.
         </h3>
         <p
           style={{ fontFamily: "'Exo 2', sans-serif" }}
-          className="text-sm text-slate-300 font-normal mt-1.5"
+          className="text-xs sm:text-[13px] text-slate-300 font-normal mt-1 max-w-xl mx-auto"
         >
-          Configure the size of your adversarial AI boardroom panel.
+          Configure the number of adversarial AI boardroom personas to challenge you.
         </p>
       </div>
 

@@ -117,13 +117,13 @@ export const SessionSetupModal: React.FC<SessionSetupModalProps> = ({
       {/* Soft Indigo/Violet Light Source (Right) */}
       <div className="absolute top-1/2 right-[12%] -translate-y-1/2 w-[600px] h-[480px] bg-indigo-500/[0.09] rounded-full blur-[170px] pointer-events-none" />
 
-      {/* Main Liquid-Glass Modal Window */}
+      {/* Main Liquid-Glass Modal Window (Fixed Uniform Size Across All Steps) */}
       <motion.div
         initial={{ opacity: 0, scale: 0.96, y: 16 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.96, y: 16 }}
         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-        className="relative w-full max-w-5xl lg:max-w-6xl rounded-[30px] bg-gradient-to-b from-slate-900/80 via-slate-950/90 to-[#050813]/96 border border-cyan-500/25 hover:border-cyan-400/40 backdrop-blur-3xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.16),0_30px_90px_rgba(0,0,0,0.95)] overflow-hidden flex flex-col my-auto transition-colors duration-500"
+        className="relative w-full max-w-4xl h-[600px] sm:h-[620px] max-h-[92vh] rounded-[28px] bg-gradient-to-b from-slate-900/80 via-slate-950/90 to-[#050813]/96 border border-cyan-500/25 hover:border-cyan-400/40 backdrop-blur-3xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.16),0_30px_90px_rgba(0,0,0,0.95)] overflow-hidden flex flex-col my-auto transition-colors duration-500"
       >
         {/* Top Inner Specular Light Edge */}
         <div className="absolute top-0 left-10 right-10 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none z-20" />
@@ -137,8 +137,8 @@ export const SessionSetupModal: React.FC<SessionSetupModalProps> = ({
         {/* Fluid Cyan Bottom Rim Line */}
         <div className="absolute bottom-0 left-0 right-0 h-[1.5px] opacity-35 bg-gradient-to-r from-cyan-500/80 via-cyan-400/20 to-transparent pointer-events-none z-20" />
 
-        {/* AI System-Status Header Bar */}
-        <div className="px-7 py-4.5 border-b border-white/[0.08] flex items-center justify-between bg-slate-900/30 backdrop-blur-xl relative z-10">
+        {/* AI System-Status Header Bar (Fixed Header) */}
+        <div className="px-6 py-4 border-b border-white/[0.08] flex items-center justify-between bg-slate-900/30 backdrop-blur-xl relative z-10 shrink-0">
           <div className="flex items-center gap-3">
             <span className="w-2 h-2 rounded-full bg-neon-cyan animate-pulse shadow-[0_0_10px_#00f0ff]" />
             <span
@@ -160,15 +160,15 @@ export const SessionSetupModal: React.FC<SessionSetupModalProps> = ({
         </div>
 
         {/* Thin Luminous Liquid Progress Bar */}
-        <div className="w-full bg-slate-950/80 h-[2px] relative z-10 overflow-hidden">
+        <div className="w-full bg-slate-950/80 h-[2px] relative z-10 overflow-hidden shrink-0">
           <div
             className="h-full bg-gradient-to-r from-cyan-400 via-sky-300 to-cyan-500 shadow-[0_0_14px_rgba(0,240,255,0.9)] transition-all duration-400 ease-out"
             style={{ width: `${(currentStep / totalSteps) * 100}%` }}
           />
         </div>
 
-        {/* Modal Body Content */}
-        <div className="p-7 sm:p-9 flex-1 flex flex-col justify-between overflow-y-auto max-h-[calc(85vh-140px)] relative z-10">
+        {/* Modal Body Content (Scrollable Uniform Body Area) */}
+        <div className="p-6 sm:p-7 flex-1 min-h-0 flex flex-col justify-start overflow-y-auto relative z-10">
           <AnimatePresence mode="wait">
             {currentStep === 1 && (
               <motion.div
@@ -177,6 +177,7 @@ export const SessionSetupModal: React.FC<SessionSetupModalProps> = ({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.25 }}
+                className="w-full my-auto"
               >
                 <DocumentUploadStep
                   file={documentFile}
@@ -195,6 +196,7 @@ export const SessionSetupModal: React.FC<SessionSetupModalProps> = ({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.25 }}
+                className="w-full my-auto"
               >
                 <AgentCountStep
                   agentCount={agentCount}
@@ -210,6 +212,7 @@ export const SessionSetupModal: React.FC<SessionSetupModalProps> = ({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.25 }}
+                className="w-full my-auto"
               >
                 <PersonaSelectStep
                   maxCount={agentCount}
@@ -226,6 +229,7 @@ export const SessionSetupModal: React.FC<SessionSetupModalProps> = ({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.25 }}
+                className="w-full my-auto"
               >
                 <IntensityStep
                   intensity={intensity}
@@ -241,6 +245,7 @@ export const SessionSetupModal: React.FC<SessionSetupModalProps> = ({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.25 }}
+                className="w-full my-auto"
               >
                 <SessionSummaryStep
                   file={documentFile}
@@ -258,9 +263,9 @@ export const SessionSetupModal: React.FC<SessionSetupModalProps> = ({
           </AnimatePresence>
         </div>
 
-        {/* Floating Glass Control Strip (Footer) */}
+        {/* Locked Footer Control Bar for Steps 1 through 4 (Except Step 5) */}
         {currentStep < totalSteps && (
-          <div className="px-7 py-4.5 border-t border-white/[0.08] bg-slate-900/30 backdrop-blur-xl flex items-center justify-between relative z-10">
+          <div className="px-6 py-4 border-t border-white/[0.08] bg-slate-950/70 backdrop-blur-xl flex items-center justify-between relative z-20 shrink-0">
             {/* BACK Button */}
             <button
               onClick={() => setCurrentStep((p) => Math.max(1, p - 1))}

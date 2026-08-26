@@ -318,8 +318,8 @@ export const LiveBoardroomView: React.FC<LiveBoardroomViewProps> = ({
 
       </div>
 
-      {/* Center 3D Stage & Dual Telemetry Panels (Expanded Height & Proportions) */}
-      <main className="w-full max-w-7xl mx-auto flex-1 grid grid-cols-1 lg:grid-cols-12 gap-4 items-start pt-20 sm:pt-24 md:pt-28 pb-14 sm:pb-16 relative z-10 min-h-0">
+      {/* Center 3D Stage & Dual Telemetry Panels */}
+      <main className="w-full max-w-7xl mx-auto flex-1 grid grid-cols-1 lg:grid-cols-12 gap-4 items-start pt-26 sm:pt-30 md:pt-34 pb-14 sm:pb-16 relative z-10 min-h-0">
         
         {/* Left: Live Transcript Subtitle Feed (Toggled via Control Bar) */}
         {showTranscriptFeed && (
