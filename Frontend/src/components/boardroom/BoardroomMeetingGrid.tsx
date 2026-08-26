@@ -21,7 +21,7 @@ const AgentMeetingTile: React.FC<AgentMeetingTileProps> = ({
 }) => {
   return (
     <div
-      className={`relative w-full h-full min-h-[160px] rounded-[22px] sm:rounded-[26px] p-3 sm:p-4 flex flex-col justify-between overflow-hidden backdrop-blur-2xl transition-all duration-300 select-none group ${
+      className={`relative w-full h-full min-h-[200px] sm:min-h-[230px] rounded-[22px] sm:rounded-[26px] p-3 sm:p-4 flex flex-col justify-between overflow-hidden backdrop-blur-2xl transition-all duration-300 select-none group ${
         isActiveSpeaker
           ? 'bg-gradient-to-b from-slate-900/95 via-slate-950/95 to-[#060914]/98 border-2 shadow-[inset_0_1px_1px_rgba(255,255,255,0.25)]'
           : 'bg-gradient-to-b from-slate-900/80 via-slate-950/90 to-[#060914]/95 border border-white/[0.09] hover:border-white/[0.22] shadow-[inset_0_1px_1px_rgba(255,255,255,0.12),0_12px_28px_rgba(0,0,0,0.6)] hover:-translate-y-0.5'
@@ -54,11 +54,11 @@ const AgentMeetingTile: React.FC<AgentMeetingTileProps> = ({
         }}
       />
 
-      {/* 1. Top Section: AGENT 01 Numbering + Circular Glass Mic Icon */}
-      <div className="relative z-10 w-full flex items-center justify-between mb-1">
+      {/* 1. Top Section: AGENT 01 Numbering + Circular Glass Mic Icon (Fixed Header) */}
+      <div className="relative z-10 w-full flex items-center justify-between shrink-0 mb-1">
         {/* Agent Header Badge */}
-        <div className="flex items-baseline gap-1">
-          <span className="text-[9px] font-mono font-bold tracking-[0.2em] text-slate-400 uppercase">
+        <div className="flex items-baseline gap-1.5">
+          <span className="text-[9.5px] font-mono font-bold tracking-[0.2em] text-slate-400 uppercase">
             AGENT
           </span>
           <span
@@ -83,25 +83,25 @@ const AgentMeetingTile: React.FC<AgentMeetingTileProps> = ({
         </div>
       </div>
 
-      {/* 2. Middle Section: Hologram Character Visual (Spacious Center Stage) */}
-      <div className="relative z-10 w-full flex-1 flex items-center justify-center my-0.5 min-h-0">
+      {/* 2. Middle Section: Hologram Character Visual (Isolated Contained Stage) */}
+      <div className="relative z-10 w-full flex-1 min-h-0 flex items-center justify-center my-1 overflow-hidden">
         {/* Hologram Avatar Frame */}
-        <div className="relative w-full h-[130px] sm:h-[150px] max-h-[170px] flex items-center justify-center">
+        <div className="relative h-full max-h-[160px] sm:max-h-[190px] aspect-[4/5] flex items-center justify-center p-1">
           {/* Cyber Corner Brackets */}
           <div
-            className="absolute top-0 left-[20%] sm:left-[24%] w-2.5 h-2.5 border-t-2 border-l-2 transition-colors duration-300"
+            className="absolute top-0 left-0 w-2.5 h-2.5 border-t-2 border-l-2 transition-colors duration-300"
             style={{ borderColor: isActiveSpeaker ? agent.hex : 'rgba(255,255,255,0.25)' }}
           />
           <div
-            className="absolute top-0 right-[20%] sm:right-[24%] w-2.5 h-2.5 border-t-2 border-r-2 transition-colors duration-300"
+            className="absolute top-0 right-0 w-2.5 h-2.5 border-t-2 border-r-2 transition-colors duration-300"
             style={{ borderColor: isActiveSpeaker ? agent.hex : 'rgba(255,255,255,0.25)' }}
           />
           <div
-            className="absolute bottom-0 left-[20%] sm:left-[24%] w-2.5 h-2.5 border-b-2 border-l-2 transition-colors duration-300"
+            className="absolute bottom-0 left-0 w-2.5 h-2.5 border-b-2 border-l-2 transition-colors duration-300"
             style={{ borderColor: isActiveSpeaker ? agent.hex : 'rgba(255,255,255,0.25)' }}
           />
           <div
-            className="absolute bottom-0 right-[20%] sm:right-[24%] w-2.5 h-2.5 border-b-2 border-r-2 transition-colors duration-300"
+            className="absolute bottom-0 right-0 w-2.5 h-2.5 border-b-2 border-r-2 transition-colors duration-300"
             style={{ borderColor: isActiveSpeaker ? agent.hex : 'rgba(255,255,255,0.25)' }}
           />
 
@@ -109,9 +109,9 @@ const AgentMeetingTile: React.FC<AgentMeetingTileProps> = ({
           <img
             src={agent.image}
             alt={agent.name}
-            className={`w-full h-full object-contain filter transition-all duration-300 ${
+            className={`w-full h-full max-h-full object-contain filter transition-all duration-300 ${
               isActiveSpeaker
-                ? 'brightness-110 drop-shadow-[0_0_16px_rgba(255,255,255,0.3)] scale-[1.04]'
+                ? 'brightness-110 drop-shadow-[0_0_16px_rgba(255,255,255,0.3)] scale-[1.03]'
                 : 'brightness-95 opacity-85 group-hover:opacity-100 group-hover:brightness-105'
             }`}
             style={{
@@ -126,9 +126,9 @@ const AgentMeetingTile: React.FC<AgentMeetingTileProps> = ({
         </div>
       </div>
 
-      {/* 3. Bottom Section: Agent Name Tag in Footer + Circular Arrow Action */}
-      <div className="mt-1.5 pt-2 border-t border-white/[0.07] flex items-center justify-between relative z-10 w-full">
-        <div className="flex items-center gap-2 min-w-0 pr-1">
+      {/* 3. Bottom Section: Agent Name Tag in Footer + Circular Arrow Action (Fixed Footer) */}
+      <div className="relative z-10 w-full shrink-0 mt-1 pt-2 border-t border-white/[0.08] flex items-center justify-between">
+        <div className="flex items-center gap-2 min-w-0 pr-1 flex-1">
           <span
             className={`w-2 h-2 rounded-full shrink-0 ${isActiveSpeaker ? 'animate-ping' : ''}`}
             style={{ backgroundColor: agent.hex, boxShadow: `0 0 8px ${agent.hex}` }}

@@ -318,12 +318,12 @@ export const LiveBoardroomView: React.FC<LiveBoardroomViewProps> = ({
 
       </div>
 
-      {/* Center 3D Stage & Dual Telemetry Panels (Shifted down by additional ~2cm) */}
-      <main className="w-full max-w-7xl mx-auto flex-1 grid grid-cols-1 lg:grid-cols-12 gap-4 items-start pt-36 sm:pt-42 md:pt-48 pb-16 sm:pb-20 relative z-10 min-h-0">
+      {/* Center 3D Stage & Dual Telemetry Panels (Expanded Height & Proportions) */}
+      <main className="w-full max-w-7xl mx-auto flex-1 grid grid-cols-1 lg:grid-cols-12 gap-4 items-start pt-20 sm:pt-24 md:pt-28 pb-14 sm:pb-16 relative z-10 min-h-0">
         
         {/* Left: Live Transcript Subtitle Feed (Toggled via Control Bar) */}
         {showTranscriptFeed && (
-          <div className="lg:col-span-3 h-[calc(100vh-330px)] max-h-[410px] min-h-[200px] w-full order-2 lg:order-1 transition-all duration-300">
+          <div className="lg:col-span-3 h-[calc(100vh-230px)] max-h-[560px] min-h-[300px] w-full order-2 lg:order-1 transition-all duration-300">
             <LiveTranscriptFeed
               transcripts={transcripts}
               activePartialText={activePartialText}
@@ -338,7 +338,7 @@ export const LiveBoardroomView: React.FC<LiveBoardroomViewProps> = ({
             : showTranscriptFeed || showTelemetryPanel 
             ? 'lg:col-span-9' 
             : 'lg:col-span-12'
-        } w-full h-[calc(100vh-330px)] max-h-[410px] flex flex-col items-center justify-start order-1 lg:order-2 overflow-hidden transition-all duration-300`}>
+        } w-full h-[calc(100vh-230px)] max-h-[560px] min-h-[300px] flex flex-col items-center justify-start order-1 lg:order-2 overflow-hidden transition-all duration-300`}>
             <BoardroomMeetingGrid
               agentIds={selectedPersonaIds}
               activeSpeakerId={activeSpeakerPersonaId}
@@ -347,7 +347,7 @@ export const LiveBoardroomView: React.FC<LiveBoardroomViewProps> = ({
 
         {/* Right: Deliberation Decision Graph Logs (Toggled via Control Bar) */}
         {showTelemetryPanel && (
-          <div className="lg:col-span-3 h-[calc(100vh-330px)] max-h-[410px] min-h-[200px] w-full order-3 transition-all duration-300">
+          <div className="lg:col-span-3 h-[calc(100vh-230px)] max-h-[560px] min-h-[300px] w-full order-3 transition-all duration-300">
             <DeliberationTelemetryPanel
               logs={deliberationLogs}
               activeSpeakersCount={selectedPersonaIds.length}
