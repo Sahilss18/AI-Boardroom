@@ -13,11 +13,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExplore }) => {
       id="hero"
       className="relative w-full pt-32 sm:pt-36 pb-10 sm:pb-14 flex flex-col items-center justify-center overflow-hidden px-6 bg-transparent select-none"
     >
-      {/* 1. Cyber Grid Overlay & Perspective Grid Floor */}
-      <div className="absolute inset-0 cyber-grid-overlay pointer-events-none z-0 opacity-30 select-none" />
-      <div className="grid-floor pointer-events-none select-none" />
-
-      {/* 3. Main Hero Typography & Callouts */}
+      {/* 2. Main Hero Typography & Callouts */}
       <div className="max-w-5xl mx-auto flex flex-col items-center text-center z-10 gap-6 sm:gap-7">
         {/* Brand Title with Logo as Stylized Initial 'R' */}
         <motion.div

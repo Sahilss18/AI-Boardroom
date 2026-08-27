@@ -16,6 +16,7 @@ interface CarouselProps {
   activeAgentId?: string | number | null;
   autoPlay?: boolean;
   showPedestal?: boolean;
+  isInView?: boolean;
 }
 
 export const Carousel: React.FC<CarouselProps> = ({
@@ -23,6 +24,7 @@ export const Carousel: React.FC<CarouselProps> = ({
   activeAgentId,
   autoPlay = true,
   showPedestal = true,
+  isInView = true,
 }) => {
   // Filter agents list if specific agentIds are provided (e.g. in active live boardroom session)
   const agentsList: AIAgent[] = useMemo(() => {
@@ -115,9 +117,9 @@ export const Carousel: React.FC<CarouselProps> = ({
     resetTimer();
   };
 
-  // 2. Auto-Play Timer with Hover-Pause & Resume
+  // 2. Auto-Play Timer with Hover-Pause & Resume (Active only when in view)
   useEffect(() => {
-    const shouldPause = !isPlaying || isHovered || isHologramHovered || isPopupHovered || agentsList.length <= 1;
+    const shouldPause = !isInView || !isPlaying || isHovered || isHologramHovered || isPopupHovered || agentsList.length <= 1;
     if (!shouldPause) {
       timerRef.current = window.setInterval(() => {
         setActiveIndex((prev) => (prev + 1) % agentsList.length);
@@ -129,7 +131,7 @@ export const Carousel: React.FC<CarouselProps> = ({
         timerRef.current = null;
       }
     };
-  }, [isPlaying, isHovered, isHologramHovered, isPopupHovered, agentsList.length]);
+  }, [isInView, isPlaying, isHovered, isHologramHovered, isPopupHovered, agentsList.length]);
 
   // 3. Keyboard Navigation
   useEffect(() => {
@@ -284,7 +286,7 @@ export const Carousel: React.FC<CarouselProps> = ({
                     }
                   }}
                 >
-                  <Hologram agent={agent} isActive={isActive} distance={Math.abs(diff)} />
+                  <Hologram agent={agent} isActive={isActive} distance={Math.abs(diff)} isInView={isInView} />
 
                   {/* Floating Right-Side Hologram Info Box */}
                   <AnimatePresence>

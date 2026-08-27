@@ -1,12 +1,11 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Carousel } from '../Carousel';
 
 export const BoardroomRevealSection: React.FC = () => {
   return (
     <section
       id="boardroom"
-      className="relative w-full py-6 sm:py-8 px-4 sm:px-6 bg-transparent overflow-hidden flex flex-col items-center"
+      className="relative w-full py-6 sm:py-8 px-4 sm:px-6 bg-transparent overflow-hidden flex flex-col items-center gpu-accelerated"
     >
       {/* Background Ambient Glow Nebulas */}
       <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[900px] max-w-[95vw] h-[550px] bg-cyan-500/6 blur-[160px] pointer-events-none -z-10" />
@@ -15,13 +14,7 @@ export const BoardroomRevealSection: React.FC = () => {
       <div className="max-w-7xl mx-auto w-full flex flex-col items-center">
         
         {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-40px' }}
-          transition={{ duration: 0.7 }}
-          className="max-w-3xl text-center flex flex-col items-center gap-3 mb-14 sm:mb-18 md:mb-22 z-10"
-        >
+        <div className="max-w-3xl text-center flex flex-col items-center gap-3 mb-14 sm:mb-18 md:mb-22 z-10">
           {/* Headline */}
           <h2 className="text-3xl sm:text-5xl md:text-6xl font-display font-extrabold text-white tracking-tight leading-tight">
             Meet the{' '}
@@ -37,11 +30,11 @@ export const BoardroomRevealSection: React.FC = () => {
           >
             AI agents that question your numbers, challenge your assumptions, and expose the gaps.
           </p>
-        </motion.div>
+        </div>
 
-        {/* 3D Rotating Hologram Carousel (Centerpiece Preserved As-Is) */}
+        {/* 3D Rotating Hologram Carousel (Loaded & Active Together) */}
         <div className="w-full flex flex-col items-center relative z-20 pt-2 sm:pt-4">
-          <Carousel />
+          <Carousel isInView={true} />
         </div>
 
       </div>

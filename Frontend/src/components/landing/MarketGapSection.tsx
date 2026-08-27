@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { XCircle, CheckCircle2, AlertTriangle, Sparkles } from 'lucide-react';
 
 export const MarketGapSection: React.FC = () => {
@@ -20,7 +19,7 @@ export const MarketGapSection: React.FC = () => {
   ];
 
   return (
-    <section id="market-gap" className="relative w-full py-12 sm:py-16 px-4 sm:px-6 bg-transparent overflow-hidden">
+    <section id="market-gap" className="relative w-full py-16 sm:py-24 px-4 sm:px-6 bg-transparent overflow-hidden">
       {/* Background ambient lighting */}
       <div className="absolute top-1/2 left-1/4 w-[500px] h-[400px] bg-rose-950/15 blur-[150px] pointer-events-none -z-10" />
       <div className="absolute top-1/2 right-1/4 w-[500px] h-[400px] bg-cyan-950/15 blur-[150px] pointer-events-none -z-10" />
@@ -40,13 +39,9 @@ export const MarketGapSection: React.FC = () => {
         {/* Side-by-Side Comparison Matrix */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 w-full">
           
-          {/* Left Column: Traditional Rehearsal */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6 }}
-            className="relative rounded-[28px] p-7 sm:p-8 bg-gradient-to-b from-slate-900/80 via-slate-950/90 to-[#060913]/95 border border-rose-500/35 hover:border-rose-400/60 backdrop-blur-2xl flex flex-col justify-between overflow-hidden group transition-all duration-500 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12),0_20px_50px_rgba(0,0,0,0.7)] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.22),0_25px_55px_rgba(244,63,94,0.15)] select-none"
+          {/* Left Column: Traditional Rehearsal (Loaded Together) */}
+          <div
+            className="relative rounded-[28px] p-7 sm:p-8 bg-gradient-to-b from-slate-900/80 via-slate-950/90 to-[#060913]/95 border border-rose-500/35 hover:border-rose-400/60 backdrop-blur-2xl flex flex-col justify-start overflow-hidden group transition-all duration-300 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12),0_20px_50px_rgba(0,0,0,0.7)] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.22),0_25px_55px_rgba(244,63,94,0.15)] select-none gpu-accelerated"
           >
             {/* Top Inner Specular Light Edge */}
             <div className="absolute top-0 left-8 right-8 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none" />
@@ -102,21 +97,11 @@ export const MarketGapSection: React.FC = () => {
                 ))}
               </div>
             </div>
+          </div>
 
-            {/* Bottom Telemetry Tag */}
-            <div className="mt-8 pt-4 border-t border-white/[0.07] text-[10px] font-mono text-rose-400/90 uppercase font-semibold flex items-center justify-between relative z-10">
-              <span className="tracking-wider">STATUS: FAILS UNDER ADVERSARIAL PRESSURE</span>
-              <span className="w-2 h-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e]" />
-            </div>
-          </motion.div>
-
-          {/* Right Column: ReflectionAI */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6 }}
-            className="relative rounded-[28px] p-7 sm:p-8 bg-gradient-to-b from-slate-900/80 via-slate-950/90 to-[#060913]/95 border border-cyan-500/35 hover:border-cyan-400/60 backdrop-blur-2xl flex flex-col justify-between overflow-hidden group transition-all duration-500 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12),0_20px_50px_rgba(0,0,0,0.7)] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.22),0_25px_55px_rgba(0,240,255,0.18)] select-none"
+          {/* Right Column: ReflectionAI (Loaded Together) */}
+          <div
+            className="relative rounded-[28px] p-7 sm:p-8 bg-gradient-to-b from-slate-900/80 via-slate-950/90 to-[#060913]/95 border border-cyan-500/35 hover:border-cyan-400/60 backdrop-blur-2xl flex flex-col justify-start overflow-hidden group transition-all duration-300 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12),0_20px_50px_rgba(0,0,0,0.7)] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.22),0_25px_55px_rgba(0,240,255,0.18)] select-none gpu-accelerated"
           >
             {/* Top Inner Specular Light Edge */}
             <div className="absolute top-0 left-8 right-8 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none" />
@@ -172,13 +157,7 @@ export const MarketGapSection: React.FC = () => {
                 ))}
               </div>
             </div>
-
-            {/* Bottom Telemetry Tag */}
-            <div className="mt-8 pt-4 border-t border-white/[0.07] flex items-center justify-between text-[10px] font-mono text-neon-cyan font-bold uppercase relative z-10">
-              <span className="tracking-wider">STATUS: PRODUCTION BOARDROOM READY</span>
-              <span className="w-2 h-2 rounded-full bg-neon-cyan animate-pulse shadow-[0_0_6px_#00f0ff]" />
-            </div>
-          </motion.div>
+          </div>
 
         </div>
 

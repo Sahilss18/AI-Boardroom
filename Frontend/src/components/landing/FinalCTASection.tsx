@@ -8,14 +8,12 @@ interface FinalCTASectionProps {
 
 export const FinalCTASection: React.FC<FinalCTASectionProps> = ({ onStartSimulation }) => {
   return (
-    <section className="relative w-full py-10 sm:py-14 px-6 bg-transparent overflow-hidden flex flex-col items-center justify-center">
+    <section id="cta" className="relative w-full min-h-[65vh] py-24 sm:py-36 md:py-44 px-6 bg-transparent overflow-hidden flex flex-col items-center justify-center gpu-accelerated">
       {/* Background Central Atmospheric Light Projection Cone */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-gradient-to-t from-cyan-500/15 via-purple-500/10 to-transparent blur-[140px] pointer-events-none -z-10" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] max-w-[95vw] h-[550px] bg-gradient-to-t from-cyan-500/15 via-purple-500/10 to-transparent blur-[160px] pointer-events-none -z-10" />
 
-      {/* Cyber Grid Substrate */}
-      <div className="absolute inset-0 cyber-grid-overlay pointer-events-none z-0 opacity-40" />
 
-      <div className="max-w-4xl mx-auto flex flex-col items-center text-center z-10 gap-6 sm:gap-8">
+      <div className="max-w-4xl mx-auto flex flex-col items-center text-center z-10 gap-6 sm:gap-8 my-auto">
         
         {/* Headline */}
         <h2 className="text-4xl sm:text-6xl md:text-7xl font-display font-extrabold text-white tracking-tight leading-[1.08]">

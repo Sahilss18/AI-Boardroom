@@ -107,14 +107,24 @@ uniform float iBlend;
 uniform float iFalloff;
 uniform float iOpacity;
 
-float rayStrength(vec2 raySource, vec2 rayRefDirection, vec2 coord, float seedA, float seedB, float speed) {
+// Smooth, clean ray beam with dynamic width and shimmer
+float rayBeam(vec2 raySource, vec2 rayRefDirection, vec2 coord, float beamWidth, float timeOffset) {
   vec2 sourceToCoord = coord - raySource;
-  float cosAngle = dot(normalize(sourceToCoord), rayRefDirection);
-  return clamp(
-    (0.38 + 0.18 * sin(cosAngle * seedA + iTime * speed)) +
-    (0.28 + 0.18 * cos(-cosAngle * seedB + iTime * speed * 0.8)),
-    0.0, 1.0) *
-    smoothstep(-0.2, 0.95, cosAngle);
+  float dist = length(sourceToCoord);
+  if (dist < 1.0) return 0.0;
+  
+  vec2 dir = sourceToCoord / dist;
+  float cosAngle = dot(dir, rayRefDirection);
+  if (cosAngle <= 0.0) return 0.0;
+  
+  // Dynamic breathing & shimmer
+  float shimmer = 0.82 + 0.18 * sin(iTime * iSpeed * 1.4 + timeOffset);
+  
+  // Dynamic beam width breathing
+  float dynWidth = beamWidth + sin(iTime * iSpeed * 0.75 + timeOffset * 1.5) * 4.5;
+  
+  float beam = pow(cosAngle, max(12.0, dynWidth)) * shimmer;
+  return smoothstep(0.01, 0.95, beam);
 }
 
 void main() {
@@ -124,8 +134,8 @@ void main() {
 
   vec2 coord = vec2(fragCoord.x, iResolution.y - fragCoord.y);
   
-  // Light source placed at top-right corner
-  vec2 rayPos = vec2(iResolution.x * 1.02, -0.05 * iResolution.y);
+  // Corner light source position
+  vec2 rayPos = vec2(iResolution.x * 1.02, -0.04 * iResolution.y);
 
   float tiltRad = iTilt * 3.14159265 / 180.0;
   float cs = cos(tiltRad);
@@ -133,37 +143,49 @@ void main() {
   vec2 rel = coord - rayPos;
   vec2 tiltedCoord = vec2(rel.x * cs - rel.y * sn, rel.x * sn + rel.y * cs) + rayPos;
 
-  float spreadAngle = iSpread * 0.35;
+  float spread = iSpread * 0.22;
   
-  // Ray 1: Streaks across the top towards top-left (~170 deg)
-  vec2 rayRefDir1 = normalize(vec2(cos(3.0 - spreadAngle * 0.3), sin(3.0 - spreadAngle * 0.3)));
+  // Dynamic sweeping angular motion so the light beams sway, sweep, and drift actively
+  float t = iTime * iSpeed;
+  float angleOffset1 = sin(t * 0.65 + 0.0) * 0.16 + cos(t * 0.32 + 1.2) * 0.07;
+  float angleOffset2 = cos(t * 0.52 + 2.1) * 0.18 + sin(t * 0.25 + 0.4) * 0.08;
+  float angleOffset3 = sin(t * 0.78 + 4.3) * 0.15 + cos(t * 0.38 + 2.7) * 0.08;
   
-  // Ray 2: Streaks across upper-middle towards center-left (~140 deg)
-  vec2 rayRefDir2 = normalize(vec2(cos(2.4), sin(2.4)));
-  
-  // Ray 3: Streaks downwards-left (~105 deg)
-  vec2 rayRefDir3 = normalize(vec2(cos(1.85 + spreadAngle * 0.4), sin(1.85 + spreadAngle * 0.4)));
+  // 3 Distinct, silky-smooth light shafts swaying naturally into the scene
+  vec2 dir1 = normalize(vec2(cos(2.98 - spread * 0.35 + angleOffset1), sin(2.98 - spread * 0.35 + angleOffset1)));
+  vec2 dir2 = normalize(vec2(cos(2.48 + angleOffset2), sin(2.48 + angleOffset2)));
+  vec2 dir3 = normalize(vec2(cos(1.98 + spread * 0.45 + angleOffset3), sin(1.98 + spread * 0.45 + angleOffset3)));
 
-  vec4 rays1 = vec4(iRayColor1, 1.0) * rayStrength(rayPos, rayRefDir1, tiltedCoord, 34.2, 21.1, iSpeed * 0.9);
-  vec4 rays2 = vec4(iRayColor2, 1.0) * rayStrength(rayPos, rayRefDir2, tiltedCoord, 22.4, 18.0, iSpeed * 0.7);
-  vec4 rays3 = vec4(mix(iRayColor1, iRayColor2, 0.45), 1.0) * rayStrength(rayPos, rayRefDir3, tiltedCoord, 28.5, 14.8, iSpeed * 0.5);
+  float b1 = rayBeam(rayPos, dir1, tiltedCoord, 24.0, 0.0);
+  float b2 = rayBeam(rayPos, dir2, tiltedCoord, 18.0, 2.1);
+  float b3 = rayBeam(rayPos, dir3, tiltedCoord, 22.0, 4.3);
 
-  vec4 color = rays1 * (1.0 - iBlend) + rays2 * iBlend + rays3 * 0.35;
+  vec3 col1 = iRayColor1 * b1;
+  vec3 col2 = iRayColor2 * b2;
+  vec3 col3 = mix(iRayColor1, iRayColor2, 0.5) * b3;
 
-  // Normalized distance from light source
-  float distanceToLight = length(fragCoord.xy - vec2(rayPos.x, iResolution.y - rayPos.y)) / max(iResolution.x, iResolution.y);
-  
-  // Soft, subtle brightness curve
-  float brightness = (iIntensity * 0.70) / (1.0 + pow(distanceToLight * 2.0, iFalloff));
-  color.rgb *= brightness;
+  vec3 color = mix(col1, col2, iBlend) + col3 * 0.6;
+
+  // Clean radial distance falloff - decays smoothly to zero so background stays crystal clear
+  float dist = length(coord - rayPos) / max(iResolution.x, iResolution.y);
+  float falloff = exp(-dist * iFalloff * 2.2);
+  color *= falloff * iIntensity;
+
+  // Corner origin bloom for radiant light source in top corners
+  float cornerBloom = exp(-dist * 5.0) * 0.3 * iIntensity;
+  color += mix(iRayColor1, iRayColor2, 0.5) * cornerBloom;
 
   // Saturation tuning
-  float gray = dot(color.rgb, vec3(0.299, 0.587, 0.114));
-  color.rgb = mix(vec3(gray), color.rgb, iSaturation);
+  float gray = dot(color, vec3(0.299, 0.587, 0.114));
+  color = mix(vec3(gray), color, iSaturation);
 
-  // Soft blend opacity
-  color.a = clamp(max(color.r, max(color.g, color.b)) * iOpacity, 0.0, 0.70);
-  gl_FragColor = color;
+  // High-precision dithering to eliminate 8-bit banding rings on dark backgrounds
+  float dither = (fract(sin(dot(fragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453) - 0.5) * (1.0 / 255.0);
+  color = max(vec3(0.0), color + dither);
+
+  // Crisp alpha with rich vibrant peak opacity
+  float alpha = clamp(max(color.r, max(color.g, color.b)) * iOpacity, 0.0, 1.0);
+  gl_FragColor = vec4(color, alpha);
 }`;
 
       const [flipX, flipY] = originToFlip(origin);

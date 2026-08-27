@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import {
   Mic,
   Search,
@@ -8,8 +7,7 @@ import {
   Layers,
   Cpu,
   Radio,
-  Volume2,
-  ArrowUpRight
+  Volume2
 } from 'lucide-react';
 
 export const IntelligenceFlowSection: React.FC = () => {
@@ -116,18 +114,14 @@ export const IntelligenceFlowSection: React.FC = () => {
           </p>
         </div>
 
-        {/* Liquid-Glass 2x4 Process Grid */}
+        {/* Liquid-Glass 2x4 Process Grid (Loaded Together) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 w-full">
-          {steps.map((s, idx) => {
+          {steps.map((s) => {
             const Icon = s.icon;
             return (
-              <motion.div
+              <div
                 key={s.step}
-                initial={{ opacity: 0, y: 25 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{ duration: 0.5, delay: idx * 0.05 }}
-                className="relative rounded-[26px] p-6 sm:p-7 bg-gradient-to-b from-slate-900/80 via-slate-950/90 to-[#060913]/95 border border-white/[0.09] hover:border-white/[0.22] backdrop-blur-2xl flex flex-col justify-between overflow-hidden group transition-all duration-500 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12),0_15px_35px_rgba(0,0,0,0.6)] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.22),0_20px_45px_rgba(0,0,0,0.85)] hover:-translate-y-1 select-none"
+                className="relative rounded-[26px] p-6 sm:p-7 bg-gradient-to-b from-slate-900/80 via-slate-950/90 to-[#060913]/95 border border-white/[0.09] hover:border-white/[0.22] backdrop-blur-2xl flex flex-col justify-start h-full min-h-[310px] sm:min-h-[330px] overflow-hidden group transition-all duration-300 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12),0_15px_35px_rgba(0,0,0,0.6)] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.22),0_20px_45px_rgba(0,0,0,0.85)] hover:-translate-y-1 select-none gpu-accelerated"
               >
                 {/* Top Inner Specular Light Edge */}
                 <div className="absolute top-0 left-6 right-6 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none" />
@@ -195,36 +189,13 @@ export const IntelligenceFlowSection: React.FC = () => {
                   {/* Body Text in Exo 2 with Generous Line Spacing */}
                   <p
                     style={{ fontFamily: "'Exo 2', sans-serif" }}
-                    className="text-[15px] sm:text-base text-slate-300 font-normal leading-[1.65]"
+                    className="text-[14px] sm:text-[15px] text-slate-300 font-normal leading-relaxed"
                   >
                     {s.description}
                   </p>
                 </div>
 
-                {/* Bottom Card Footer: Minimal Telemetry + Circular Arrow Action */}
-                <div className="mt-6 pt-3.5 border-t border-white/[0.07] flex items-center justify-between relative z-10">
-                  <div className="flex items-center gap-2">
-                    <span
-                      className="w-1.5 h-1.5 rounded-full"
-                      style={{ backgroundColor: s.color, boxShadow: `0 0 6px ${s.color}` }}
-                    />
-                    <span className="text-[10px] font-mono text-slate-400 tracking-wider uppercase font-medium">
-                      STATE {s.step} // ACTIVE
-                    </span>
-                  </div>
-
-                  {/* Small Circular Arrow Glass Button */}
-                  <div
-                    className="w-8 h-8 rounded-full border border-white/[0.12] bg-white/[0.03] group-hover:bg-white/[0.1] flex items-center justify-center transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                    style={{
-                      borderColor: `rgba(255,255,255,0.15)`
-                    }}
-                  >
-                    <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors" />
-                  </div>
-                </div>
-
-              </motion.div>
+              </div>
             );
           })}
         </div>

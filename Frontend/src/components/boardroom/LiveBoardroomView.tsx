@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Carousel } from '../Carousel';
 import { BoardroomMeetingGrid } from './BoardroomMeetingGrid';
 import { LiveTranscriptFeed, type TranscriptItem } from './LiveTranscriptFeed';
 import { DeliberationTelemetryPanel, type DeliberationLog } from './DeliberationTelemetryPanel';
@@ -20,7 +19,7 @@ interface LiveBoardroomViewProps {
 export const LiveBoardroomView: React.FC<LiveBoardroomViewProps> = ({
   sessionId,
   selectedPersonaIds,
-  documentFile,
+  documentFile: _documentFile,
   onExit,
 }) => {
   const [connectionState, setConnectionState] = useState<'connecting' | 'connected' | 'disconnected' | 'error'>('connecting');

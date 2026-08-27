@@ -98,34 +98,34 @@ export const App: React.FC = () => {
       
       {/* Fixed Fullscreen Background WebGL SideRays (Dual Top-Right & Top-Left Light Sources) */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        {/* Top-Right Light Ray Source */}
+        {/* Top-Right Neon Cyan / Sky Blue Light Ray Source */}
         <SideRays
-          speed={2.0}
-          rayColor1="#F59E0B"
-          rayColor2="#60A5FA"
-          intensity={1.9}
-          spread={2.5}
+          speed={1.5}
+          rayColor1="#00f0ff"
+          rayColor2="#38bdf8"
+          intensity={1.65}
+          spread={2.0}
           origin="top-right"
-          tilt={5}
-          saturation={1.4}
-          blend={0.62}
-          falloff={1.35}
-          opacity={0.75}
+          tilt={3}
+          saturation={1.05}
+          blend={0.5}
+          falloff={1.2}
+          opacity={0.68}
         />
 
-        {/* Top-Left Light Ray Source */}
+        {/* Top-Left Warm Amber / Gold Light Ray Source */}
         <SideRays
-          speed={1.9}
+          speed={1.5}
           rayColor1="#F59E0B"
-          rayColor2="#60A5FA"
-          intensity={1.9}
-          spread={2.5}
+          rayColor2="#fbbf24"
+          intensity={1.65}
+          spread={2.0}
           origin="top-left"
-          tilt={5}
-          saturation={1.4}
-          blend={0.62}
-          falloff={1.35}
-          opacity={0.75}
+          tilt={3}
+          saturation={1.05}
+          blend={0.5}
+          falloff={1.2}
+          opacity={0.68}
         />
       </div>
 

@@ -6,6 +6,7 @@ interface HologramProps {
   agent: AIAgent;
   isActive: boolean;
   distance?: number;
+  isInView?: boolean;
 }
 
 interface Particle {
@@ -19,7 +20,7 @@ interface Particle {
   maxLife: number;
 }
 
-export const Hologram: React.FC<HologramProps> = ({ agent, isActive, distance = 0 }) => {
+export const Hologram: React.FC<HologramProps> = ({ agent, isActive, distance = 0, isInView = true }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const progressRef = useRef(0); // Materialization progress (0 to 1)
   const particlesRef = useRef<Particle[]>([]);
@@ -39,8 +40,9 @@ export const Hologram: React.FC<HologramProps> = ({ agent, isActive, distance = 
   const bgAuraOpacity = isCenter ? 0.9 : isNeighbor ? 0.65 : 0.15;
   const bracketOpacity = isCenter ? 1.0 : isNeighbor ? 0.75 : 0.3;
 
-  // 1. High-Resolution Canvas Particle Emitter (Ascending Sparks)
+  // 1. High-Resolution Canvas Particle Emitter (Ascending Sparks - Active only when in view)
   useEffect(() => {
+    if (!isInView) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -140,7 +142,7 @@ export const Hologram: React.FC<HologramProps> = ({ agent, isActive, distance = 
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationId);
     };
-  }, [agent, isActive]);
+  }, [agent, isActive, isInView]);
 
   function hexToRgba(hex: string, alpha: number): string {
     const r = parseInt(hex.slice(1, 3), 16);

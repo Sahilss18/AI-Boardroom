@@ -71,50 +71,7 @@ export const Pedestal: React.FC<PedestalProps> = ({ agent, isActive, distance = 
     rim.position.set(-3.0, 2.5, -2.5);
     scene.add(rim);
 
-    // 4. Procedural Floor Grid Texture
-    function makeFloorTexture() {
-      const size = 512;
-      const c = document.createElement('canvas');
-      c.width = c.height = size;
-      const ctx = c.getContext('2d');
-      if (!ctx) return null;
-      ctx.fillStyle = 'rgba(0,0,0,0)';
-      ctx.fillRect(0, 0, size, size);
-      const cx = size / 2, cy = size / 2, maxR = size * 0.48;
-
-      ctx.strokeStyle = 'rgba(140,210,230,0.18)';
-      ctx.lineWidth = 1;
-      for (let r = maxR / 6; r <= maxR; r += maxR / 6) {
-        ctx.beginPath();
-        ctx.arc(cx, cy, r, 0, Math.PI * 2);
-        ctx.stroke();
-      }
-
-      const spokes = 20;
-      for (let i = 0; i < spokes; i++) {
-        const ang = (i / spokes) * Math.PI * 2;
-        ctx.beginPath();
-        ctx.moveTo(cx, cy);
-        ctx.lineTo(cx + Math.cos(ang) * maxR, cy + Math.sin(ang) * maxR);
-        ctx.stroke();
-      }
-
-      ctx.globalCompositeOperation = 'destination-out';
-      const edge = ctx.createRadialGradient(cx, cy, maxR * 0.7, cx, cy, maxR);
-      edge.addColorStop(0, 'rgba(0,0,0,0)');
-      edge.addColorStop(1, 'rgba(0,0,0,1)');
-      ctx.fillStyle = edge;
-      ctx.fillRect(0, 0, size, size);
-
-      const tex = new THREE.CanvasTexture(c);
-      tex.generateMipmaps = false;
-      tex.minFilter = THREE.LinearFilter;
-      tex.magFilter = THREE.LinearFilter;
-      tex.needsUpdate = true;
-      return tex;
-    }
-
-    // 5. Procedural Dark Premium Technical HUD Top Disc Texture
+    // 4. Procedural Dark Premium Technical HUD Top Disc Texture
     function makeTopDiscTexture(hex: string) {
       const size = 512;
       const c = document.createElement('canvas');
@@ -175,28 +132,11 @@ export const Pedestal: React.FC<PedestalProps> = ({ agent, isActive, distance = 
       return tex;
     }
 
-    // 6. Floor Elements
+    // Base Group
     const base = new THREE.Group();
     scene.add(base);
 
-    // Floor tech grid
-    const gridTex = makeFloorTexture();
-    let gridMesh: THREE.Mesh | undefined;
-    if (gridTex) {
-      const gridMat = new THREE.MeshBasicMaterial({
-        map: gridTex,
-        transparent: true,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false,
-        opacity: 0.35,
-      });
-      gridMesh = new THREE.Mesh(new THREE.CircleGeometry(4.2, 64), gridMat);
-      gridMesh.rotation.x = -Math.PI / 2;
-      gridMesh.position.y = 0.005;
-      base.add(gridMesh);
-    }
-
-    // 7. Projector Chassis (PBR Metals)
+    // 5. Projector Chassis (PBR Metals)
     const metalMat = new THREE.MeshStandardMaterial({
       color: 0x0e1620,
       metalness: 0.90,
@@ -376,10 +316,7 @@ export const Pedestal: React.FC<PedestalProps> = ({ agent, isActive, distance = 
       const isCenter = dist === 0;
       const isNeighbor = dist === 1;
 
-      // Rotate floor grid
-      if (gridMesh) {
-        gridMesh.rotation.z = t * 0.05;
-      }
+
 
       // Conduit power ring pulse
       if (powerRingMat) {
